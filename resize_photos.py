@@ -36,7 +36,7 @@ sizes = [
     }
 ]
 
-@app.route('/json_imgs/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def return_imgs_json():
     """Consumes a webservice and creates images in different sizes for each entry in the json returned by the
     consumed webservice
