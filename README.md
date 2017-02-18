@@ -31,6 +31,6 @@ Before getting the webservice up and running, make sure you have the following p
 Now that everything is set, just go to where resize_photos.py is located and run **python resize_photos.py**.
 Go to your browser and access **http://localhost:5000/json_imgs/** to get the json.
 
-**Obs:** This repository has been commited with a virtual env in case you don't want to download all the necessary packages, so if you want to just run the code, activate the virtual env by running **source flask_ws/bin/activate** inside resize_photos_skyhub folder
+**Obs:** This repository has been commited with a virtual env in case you don't want to download all the necessary packages, so if you want to just run the code, activate the virtual env by running **source flask_ws/bin/activate** inside resize_photos_skyhub folder before starting resize_photos.py webservice.
 
 ### Automated tests
