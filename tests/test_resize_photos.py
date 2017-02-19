@@ -1,12 +1,12 @@
-from flask import json
-from flask import session
-import flask
-import flask_pymongo
+
+import os
 import unittest
 import resize_photos
+from flask import json
+from werkzeug.utils import secure_filename
 
 
-class FlaskRequestTest(unittest.TestCase):
+class TestResizePhotosWS(unittest.TestCase):
 
     def setUp(self):
         """Setting up variables"""
@@ -80,7 +80,15 @@ class FlaskRequestTest(unittest.TestCase):
         self.app = resize_photos.app.test_client()
 
     def tearDown(self):
-        pass
+        basepath = os.path.dirname(__file__)
+        for element in self.json_expected_response['images']:
+            for key, value in element.items():
+                filename = 'imgs/{}'.format(secure_filename(value[:-1].rpartition('/')[-1]))
+                filepath = os.path.abspath(os.path.join(basepath, "..", filename))
+                try:
+                    os.remove(filepath)
+                except OSError:
+                    pass
 
     def test_request(self):
         """Should return status 200"""

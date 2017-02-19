@@ -4,7 +4,7 @@ import os
 import urllib
 import requests
 from PIL import Image
-from flask import Flask, jsonify, request, send_from_directory, url_for
+from flask import Flask, jsonify, send_from_directory, url_for
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 
@@ -101,6 +101,8 @@ def generate_sizes_from_url_img(url):
     for element in sizes:
         create_img_custom_size(img, element["dimension"], filename, element["prefix"], url_sizes)
 
+    img.close()
+
     return url_sizes
 
 
@@ -118,6 +120,7 @@ def create_img_custom_size(img, size, filename, prefix, url_sizes):
     new_img_filename = '{}{}'.format(prefix, filename)
     new_img_location = os.path.join(app.static_folder, new_img_filename)
     new_img.save(new_img_location, format='JPEG')
+    new_img.close()
     url_sizes[prefix[:-1]] = '{}{}'.format(consumer_url, url_for('images', filename=new_img_filename))
 
 if __name__ == '__main__':

@@ -19,11 +19,12 @@ respective formats, providing their URLs.
 ### Why Python?
 
 Python offers many tools and frameworks built in the language. We don't need to worry about setting up the dev environment as all the modules are easy to install and run. The only concern is actually coding the program.
+Also, this is one of the languages that I've been wanting to use for a while, but I haven't found the opportunity until now.
 
 ### Running the server
 
 Before getting the webservice up and running, make sure you have the following python packages installed:
-* Python 3 (Without this, nothing is gonna work)
+* Python 3.x (Without this, nothing is gonna work)
 * Flask-Pymongo (Python framework to create simple webservices and also connects to mongodb)
 * Requests (Its only purpose is to make a request to the other webservice)
 * Pillow (Image manipulation)
@@ -34,3 +35,6 @@ Go to your browser and access **http://localhost:5000/json_imgs/** to get the js
 **Obs:** This repository has been commited with a virtual env in case you don't want to download all the necessary packages, so if you want to just run the code, activate the virtual env by running **source flask_ws/bin/activate** inside resize_photos_skyhub folder before starting resize_photos.py webservice.
 
 ### Automated tests
+
+If you don't want to download all necessary packages, then again you must activate the virtual environment by issuing **source flask_ws/bin/activate** in the command line.
+Run **python -m unittest tests.test_resize_photos.TestResizePhotosWS**
