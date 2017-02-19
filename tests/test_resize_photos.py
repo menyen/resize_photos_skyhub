@@ -9,20 +9,9 @@ import resize_photos
 class FlaskRequestTest(unittest.TestCase):
 
     def setUp(self):
-        self.app = resize_photos.app.test_client()
-        '''self.context = self.app.test_request_context('/')
-        self.context.push()'''
-
-    def tearDown(self):
-        pass
-        #self.context.pop()
-
-    def test_request(self):
-        rv = self.app.get('/')
-        self.assertEqual(rv.status_code, 200)
-
-    def test_request_content(self):
-        expected_response = {
+        """Setting up variables"""
+        # json containg the expected result from calling '/'
+        self.json_expected_response = {
             "images": [
                 {
                     "large": "http://localhost:5000/imgs/large_b737_5.jpg/",
@@ -86,25 +75,32 @@ class FlaskRequestTest(unittest.TestCase):
                 }
             ]
         }
-        rv = self.app.get('/')
-        actual_response = rv.json
-        self.assertEqual(actual_response, expected_response)
 
-
-
-'''class FlaskPyMongoTest(FlaskRequestTest):
-
-    def setUp(self):
-        super(FlaskPyMongoTest, self).setUp()
-
-        self.dbname = self.__class__.__name__
-        self.app.config['MONGO_DBNAME'] = self.dbname
-        self.mongo = flask.ext.pymongo.PyMongo(self.app)
+        # creating test client which will make the requests
+        self.app = resize_photos.app.test_client()
 
     def tearDown(self):
-        self.mongo.cx.drop_database(self.dbname)
-
-        super(FlaskPyMongoTest, self).tearDown()
+        pass
 
     def test_request(self):
-        pass'''
+        """Should return status 200"""
+        rv = self.app.get('/')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_request_content(self):
+        """Should return the same json as json_expected_reponse"""
+        rv = self.app.get('/')
+        json_actual_response = json.loads(rv.data)
+        self.assertEqual(json_actual_response, self.json_expected_response)
+
+    def test_each_photo_url(self):
+        """Should return status code 200 for all url found in json got from '/'"""
+        for element in self.json_expected_response['images']:
+            rv_url = self.app.get(element['url'])
+            rv_small = self.app.get(element['small'])
+            rv_medium = self.app.get(element['medium'])
+            rv_large = self.app.get(element['large'])
+            if not all(status_code == 200 for status_code in (rv_url, rv_small, rv_medium, rv_large)):
+                self.assertNotEquals
+        self.assertEquals
+

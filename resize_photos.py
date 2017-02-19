@@ -19,6 +19,7 @@ mongo = PyMongo(app)
 
 # this can be changed to whatever other webservice that provides json as input
 consumed_url = 'http://54.152.221.29/images.json'
+consumer_url = 'http://localhost:5000'
 
 # these sizes can be changed if needed to
 sizes = [
@@ -94,7 +95,7 @@ def generate_sizes_from_url_img(url):
     filename = secure_filename(url.rpartition('/')[-1])
     img_location = os.path.join(app.static_folder, filename)
     img.save(img_location, format='JPEG')
-    url_sizes['url'] = 'http://{}{}'.format(request.host, url_for('images', filename=filename))
+    url_sizes['url'] = '{}{}'.format(consumer_url, url_for('images', filename=filename))
 
     # for each image size, creates a copy with given dimensions in sizes array
     for element in sizes:
@@ -117,7 +118,7 @@ def create_img_custom_size(img, size, filename, prefix, url_sizes):
     new_img_filename = '{}{}'.format(prefix, filename)
     new_img_location = os.path.join(app.static_folder, new_img_filename)
     new_img.save(new_img_location, format='JPEG')
-    url_sizes[prefix[:-1]] = 'http://{}{}'.format(request.host, url_for('images', filename=new_img_filename))
+    url_sizes[prefix[:-1]] = '{}{}'.format(consumer_url, url_for('images', filename=new_img_filename))
 
 if __name__ == '__main__':
     app.run(debug=True)
