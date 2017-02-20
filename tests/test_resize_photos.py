@@ -80,6 +80,7 @@ class TestResizePhotosWS(unittest.TestCase):
         self.app = resize_photos.app.test_client()
 
     def tearDown(self):
+        """Delete all images created in this test"""
         basepath = os.path.dirname(__file__)
         for element in self.json_expected_response['images']:
             for key, value in element.items():
